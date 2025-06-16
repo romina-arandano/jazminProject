@@ -19,7 +19,7 @@ Route::get('/usuarios', [App\Http\Controllers\UsersController::class, 'index']);
 
 //CONTROLADOR DE MEMBRESIAS
 Route::post('membresia/usuarios', [MembresiaController::class, 'users']);
-Route::get('mebresia', [MembresiaController::class, 'list']);
+Route::get('membresia', [MembresiaController::class, 'list']);
 Route::get('membresia/{id}', [MembresiaController::class, 'index']);
 Route::post('membresia', [MembresiaController::class, 'store']);
 Route::delete('membresia/{id}', [MembresiaController::class, 'destroy']);
