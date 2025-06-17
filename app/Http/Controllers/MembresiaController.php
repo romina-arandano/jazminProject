@@ -9,7 +9,28 @@ class MembresiaController extends Controller
 {
     public function index()
     {
-        return Membresia::all();
+        // Trae membresías junto con su usuario (Eager loading)
+        $membresias = Membresia::with('user')->get();
+
+        // Mapea para incluir sólo el nombre como 'cliente'
+        $data = $membresias->map(function ($membresia) {
+            return [
+                'id' => $membresia->id,
+                'id_usuario' => $membresia->id_usuario,
+                'cliente' => $membresia->user->name ?? 'N/A',
+                'clases_adquiridas' => $membresia->clases_adquiridas,
+                'clases_disponibles' => $membresia->clases_disponibles,
+                'clases_ocupadas' => $membresia->clases_ocupadas,
+                'created_at' => $membresia->created_at,
+                'updated_at' => $membresia->updated_at,
+            ];
+        });
+
+        return response()->json([
+            'status' => 'ok',
+            'mensaje' => 'Lista de membresías',
+            'data' => $data
+        ], 200);
     }
 
     public function store(Request $request)
@@ -27,7 +48,7 @@ class MembresiaController extends Controller
             'status' => 'ok',
             'mensaje' => 'Membresía creada correctamente',
             'data' => $membresia
-        ], 201); // Código HTTP 201: creado
+        ], 201);
     }
 
     public function show($id)
@@ -51,7 +72,7 @@ class MembresiaController extends Controller
             return response()->json([
                 'status' => 'error',
                 'mensaje' => 'Membresía no encontrada',
-            ], 404); // Código HTTP 404: no encontrado
+            ], 404);
         }
 
         $membresia->delete();
@@ -60,8 +81,6 @@ class MembresiaController extends Controller
             'status' => 'ok',
             'mensaje' => 'Membresía eliminada correctamente',
             'id_eliminado' => $id
-        ], 200); // Código HTTP 200: OK
+        ], 200);
     }
-
 }
-
