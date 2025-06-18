@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembresiaController;
+use App\Http\Controllers\UsersController;
 
 // Ruta pública para login
 Route::post('/login', [AuthController::class, 'login']);
@@ -15,7 +16,12 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //CONTROLADOR DE USUARIOS
-Route::get('/usuarios', [App\Http\Controllers\UsersController::class, 'index']);
+Route::get('usuarios', [UsersController::class, 'index']);
+Route::get('usuarios/{id}', [UsersController::class, 'show']);
+Route::post('usuarios', [UsersController::class, 'store']);
+Route::put('usuarios/{id}', [UsersController::class, 'update']);
+Route::delete('usuarios/{id}', [UsersController::class, 'destroy']);
+
 
 //CONTROLADOR DE MEMBRESIAS
 Route::post('membresia/usuarios', [MembresiaController::class, 'users']);
