@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+    // para traer solo a los profes:
+    public function indexProfesores()
+    {
+        $profesores = User::where('rol', 'profesor')->select('id', 'name')->get();
+
+        return response()->json([
+            'status' => 'ok',
+            'data' => $profesores
+        ]);
+    }
+
     // GET /api/usuarios
     public function index()
     {

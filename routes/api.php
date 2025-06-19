@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembresiaController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ClaseController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\AsistenciaController;
 
 // Ruta pública para login
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,6 +24,7 @@ Route::get('usuarios/{id}', [UsersController::class, 'show']);
 Route::post('usuarios', [UsersController::class, 'store']);
 Route::put('usuarios/{id}', [UsersController::class, 'update']);
 Route::delete('usuarios/{id}', [UsersController::class, 'destroy']);
+Route::get('/profesores', [UsersController::class, 'indexProfesores']);
 
 
 //CONTROLADOR DE MEMBRESIAS
@@ -30,3 +34,6 @@ Route::get('membresia/{id}', [MembresiaController::class, 'index']);
 Route::post('membresia', [MembresiaController::class, 'store']);
 Route::delete('membresia/{id}', [MembresiaController::class, 'destroy']);
 
+Route::apiResource('clases', ClaseController::class);
+Route::apiResource('asistencias', AsistenciaController::class);
+Route::apiResource('pagos', PagoController::class);
